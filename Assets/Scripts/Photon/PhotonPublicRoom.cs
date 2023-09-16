@@ -25,6 +25,8 @@ public class PhotonPublicRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public float startingTime;
     private float lessThanMaxPlayers, atMaxPlayer, timeToStart;
 
+    GameObject plrInstance;
+
     private void Awake()
     {
         if (PhotonPublicRoom.room == null)
@@ -228,6 +230,7 @@ public class PhotonPublicRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     [PunRPC]
     private void RPC_CreatePlayer()
     {
-        PhotonNetwork.Instantiate(Path.Combine("photonPrefabs", "PLR"), transform.position, Quaternion.identity, 0);
+        plrInstance = PhotonNetwork.Instantiate(Path.Combine("photonPrefabs", "PLR"), transform.position, Quaternion.identity, 0);
+        plrInstance.transform.position = new Vector3(int.Parse(PhotonNetwork.NickName) + plrInstance.transform.position.x, plrInstance.transform.position.y, plrInstance.transform.position.z);
     }
 }

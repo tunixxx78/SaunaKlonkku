@@ -25,9 +25,6 @@ public class PhotonPrivateRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public float startingTime;
     private float lessThanMaxPlayers, atMaxPlayer, timeToStart;
 
-    //public GameObject playerNamePrefab, scenariosButtons, controllerButton, playerButtons;
-    //public Transform playersListPanel;
-
     GameObject plrInstance;
 
     private void Awake()
@@ -93,7 +90,6 @@ public class PhotonPrivateRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
                     lessThanMaxPlayers -= Time.deltaTime;
                     timeToStart = lessThanMaxPlayers;
                 }
-                //Debug.Log("Display time to start players " + timeToStart);
 
                 if (timeToStart <= 0)
                 {
@@ -239,6 +235,7 @@ public class PhotonPrivateRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     private void RPC_CreatePlayer()
     {
         plrInstance = PhotonNetwork.Instantiate(Path.Combine("photonPrefabs", "PLR"), transform.position, Quaternion.identity, 0);
+        plrInstance.transform.position = new Vector3(int.Parse(PhotonNetwork.NickName) + plrInstance.transform.position.x, plrInstance.transform.position.y, plrInstance.transform.position.z);
 
     }
 
